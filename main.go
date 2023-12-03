@@ -7,7 +7,9 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
+	"os/exec"
 
+	"github.com/AlecAivazis/survey/v2"
 	"github.com/spf13/cobra"
 )
 
@@ -25,29 +27,35 @@ type CreateRepoResponse struct {
 	} `json:"errors"`
 }
 
-func main() {
-	rootCmd := &cobra.Command{
-		Use:   "github-create-repo",
-		Short: "Create a new repo on Github",
-		Args:  cobra.ExactArgs(1),
-		Run:   createRepo,
-	}
-
-	if err := rootCmd.Execute(); err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
-}
-
 func createRepo(cmd *cobra.Command, args []string) {
-	repoName := args[0]
+	var repoName string
 
 	token := "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"
 
+	prompt := &survey.Input{
+		Message: "Enter repo name: ",
+	}
+
+	survey.AskOne(prompt, &repoName, nil)
+
+	var clone bool
+
+	var isPrivate bool
+	promptt := &survey.Confirm{
+		Message: "Is is private?: ",
+	}
+
+	survey.AskOne(promptt, &isPrivate, nil)
+
+	promptt = &survey.Confirm{
+		Message: "Do you want to clone it?: ",
+	}
+
+	survey.AskOne(promptt, &clone, nil)
 	repo := CreateRepoRequest{
 		Name:        repoName,
 		Description: "A new repo created using github api",
-		Private:     true,
+		Private:     isPrivate,
 	}
 	body, _ := json.Marshal(repo)
 
@@ -77,6 +85,15 @@ func createRepo(cmd *cobra.Command, args []string) {
 		fmt.Println("name", createRepoResponse.Name)
 		fmt.Println("url:", createRepoResponse.URL)
 
+		if clone {
+			err := gitClone(createRepoResponse.URL)
+			if err != nil {
+				fmt.Println(err)
+				os.Exit(1)
+			}
+
+			fmt.Println("Repo cloned successfully")
+		}
 	} else {
 		fmt.Println("Error creating repo")
 		fmt.Println(string(respBody))
@@ -85,4 +102,30 @@ func createRepo(cmd *cobra.Command, args []string) {
 
 func deleteRepo() {
 
+}
+
+func gitClone(url string) error {
+	cmd := exec.Command("git", "clone", url)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+
+	if err := cmd.Run(); err != nil {
+		return fmt.Errorf("erro cloning repo: %w", err)
+	}
+
+	return nil
+}
+
+func main() {
+	rootCmd := &cobra.Command{
+		Use:   "github-create-repo",
+		Short: "Create a new repo on Github",
+		Args:  cobra.NoArgs,
+		Run:   createRepo,
+	}
+
+	if err := rootCmd.Execute(); err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
 }
