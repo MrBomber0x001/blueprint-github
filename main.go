@@ -27,10 +27,14 @@ type CreateRepoResponse struct {
 	} `json:"errors"`
 }
 
+func getAccessToken() {
+
+}
+
 func createRepo(cmd *cobra.Command, args []string) {
 	var repoName string
 
-	token := "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"
+	token := "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"
 
 	prompt := &survey.Input{
 		Message: "Enter repo name: ",
@@ -100,8 +104,8 @@ func createRepo(cmd *cobra.Command, args []string) {
 	}
 }
 
-func deleteRepo() {
-
+func deleteRepo(repoName string) error {
+	return nil
 }
 
 func gitClone(url string) error {
