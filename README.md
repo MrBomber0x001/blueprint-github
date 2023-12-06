@@ -1,8 +1,4 @@
-# BluePrint
-
-BluePrint CLI
-
-## Description
+# BluePrint (⚒ work in progress)
 
 BluePrint is a command-line tool written in Go that simplifies the process of creating GitHub repositories with predefined directory structures and files. It allows developers to generate blueprint repositories directly from the command line, saving time and effort in project setup.
 
@@ -57,14 +53,6 @@ To contribute to `BluePrint`, follow these steps:
 ## License
 
 BlueprintCLI is distributed under the MIT License.
-
-## Authors
-
-- Yousef Meska - <a href="mailto:yousefmeska123@gmail.com">yousefmeska123@gmail.com</a>
-
-## Acknowledgments
-
-Optional section to acknowledge any external resources, libraries, or individuals who have contributed to the project or influenced its development.
 
 ## TODO and Log
 
