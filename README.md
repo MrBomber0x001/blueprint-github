@@ -8,7 +8,7 @@ With BluePrint, you can define custom blueprints that serve as templates for dif
 
 - Generate GitHub repositories with predefined directory structures and files.
 - Create custom blueprints for different project types or frameworks.
-- Include commonly-used files such as README templates, license files, or configuration files in the blueprints.
+- Include commonly used files such as README templates, license files, or configuration files in the blueprints.
 - Define placeholder variables in blueprints to dynamically populate values during repository creation.
 - Interact with the GitHub API to create repositories directly from the command line.
 - Simple and intuitive command-line interface.
@@ -25,15 +25,19 @@ Copy
 go install github.com/mrbomber0x001/blueprintcli
 ```
 
+Then head to github and get an access token, then pass this token to the cli tool
+
 ## Usage
 
 To use BlueprintCLI, run the following command:
 
-Copy
+```
 blueprintcli create [repositoryName] --blueprint=[blueprintName]
-[repositoryName] is the name of the GitHub repository you want to create.
-[blueprintName] is the name of the blueprint to use for repository creation.
 
+
+# [repositoryName] is the name of the GitHub repository you want to create.
+# [blueprintName] is the name of the blueprint to use for repository creation.
+```
 ## Documentation
 
 Complete documentation for BlueprintCLI can be found <a href="#">here</a>.
@@ -55,10 +59,11 @@ To contribute to `BluePrint`, follow these steps:
 BlueprintCLI is distributed under the MIT License.
 
 ## TODO and Log
-
+- [ ] Get an access token from the user, and set it on the fly
+- [ ] check for the access token if set or not, when running the application, if not set -> ask for it.
 - [x] Creating private/public repos
 - [ ] Blueprinting repo with default files required for your project depending on the tech stack
-- [ ] check the token -> cache, for the first time, to set in `.env` files
-- [ ] Bundles the application in single command line tool in the system
+- [ ] Check the token -> cache, for the first time, to set in `.env` files
+- [ ] Bundles the application in a single command line tool in the system
 - [ ] Clone the repo after creating it
-- [ ] Make it as downloadable from git
+- [ ] Make it downloadable from git
